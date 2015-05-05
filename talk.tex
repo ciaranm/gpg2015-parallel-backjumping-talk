@@ -124,6 +124,8 @@
 
     \centering
     \begin{tikzpicture}%{{{
+        \node at (-1, 0) { ~ };
+
         \node <1> [draw, circle, fill=white, inner sep=2pt, font=\bfseries] (Na) at (0.75,  0) {1};
         \node <1> [draw, circle, fill=white, inner sep=2pt, font=\bfseries] (Nb) at (0.75, -1) {2};
         \node <1> [draw, circle, fill=white, inner sep=2pt, font=\bfseries] (Nc) at (0, -2) {3};
@@ -153,7 +155,7 @@
         \node <1> [draw, circle, fill=white, inner sep=2pt, font=\bfseries] (N4) at (7.5, -1) {4};
         \node <1> [draw, circle, fill=white, inner sep=2pt, font=\bfseries] (N5) at (5.5, -2) {5};
         \node <1> [draw, circle, fill=white, inner sep=2pt, font=\bfseries] (N6) at (7.5, -2) {6};
-        \node <1> [draw, circle, fill=white, inner sep=2pt, font=\bfseries] (N7) at (5.5, -3) {7};
+        \node <1> [draw, circle, fill=white, inner sep=2pt, font=\bfseries] (N7) at (7.5, -3) {7};
 
         \node <2> [draw, circle, fill=uofgthistle, inner sep=2pt, font=\bfseries] (N1) at (5.5,  0) {1};
         \node <2> [draw, circle, fill=white, inner sep=2pt, font=\bfseries] (N2) at (7.5,  0) {2};
@@ -161,14 +163,14 @@
         \node <2> [draw, circle, fill=white, inner sep=2pt, font=\bfseries] (N4) at (7.5, -1) {4};
         \node <2> [draw, circle, fill=uofgpillarbox, inner sep=2pt, font=\bfseries] (N5) at (5.5, -2) {5};
         \node <2> [draw, circle, fill=uofgcobalt, inner sep=2pt, font=\bfseries] (N6) at (7.5, -2) {6};
-        \node <2> [draw, circle, fill=white, inner sep=2pt, font=\bfseries] (N7) at (5.5, -3) {7};
+        \node <2> [draw, circle, fill=white, inner sep=2pt, font=\bfseries] (N7) at (7.5, -3) {7};
 
         \draw [ledge] (N1) -- (N2);
         \draw [ledge] (N1) -- (N4);
         \draw [ledge] (N2) -- (N4);
         \draw [ledge] (N4) -- (N6);
         \draw [ledge] (N2) to [in=45, out=315] (N6);
-        \draw [ledge] (N5) -- (N7);
+        \draw [ledge] (N6) -- (N7);
 
         \draw <1> [ledge] (N1) -- (N3);
         \draw <1> [ledge] (N3) -- (N5);
@@ -185,6 +187,61 @@
 \end{frame}
 
 \begin{frame}{Filtering}
+
+    \centering
+    \begin{tikzpicture}%{{{
+        \node at (-1, 0) { ~ };
+
+        \node [draw, circle, fill=white, inner sep=2pt, font=\bfseries] (Na) at (0.75,  0) {1};
+        \node [draw, circle, fill=white, inner sep=2pt, font=\bfseries] (Nb) at (0.75, -1) {2};
+        \node [draw, circle, fill=white, inner sep=2pt, font=\bfseries] (Nc) at (0, -2) {3};
+        \node [draw, circle, fill=white, inner sep=2pt, font=\bfseries] (Nd) at (1.5, -2) {4};
+
+        \node <1> [right = 0 of Na, anchor = west, font=\scriptsize] { 1234567 };
+        \node <1> [right = 0 of Nb, anchor = west, font=\scriptsize] { 1234567 };
+        \node <1> [below = 0 of Nc, anchor = north, font=\scriptsize] { 1234567 };
+        \node <1> [below = 0 of Nd, anchor = north, font=\scriptsize] { 1234567 };
+
+        \node <2> [right = 0 of Na, anchor = west, font=\scriptsize] { 1234567 };
+        \node <2> [right = 0 of Nb, anchor = west, font=\scriptsize] { 123456\phantom{7} };
+        \node <2> [below = 0 of Nc, anchor = north, font=\scriptsize] { 123456\phantom{7} };
+        \node <2> [below = 0 of Nd, anchor = north, font=\scriptsize] { 123456\phantom{7} };
+
+        \node <3> [right = 0 of Na, anchor = west, font=\scriptsize] { 1234567 };
+        \node <3> [right = 0 of Nb, anchor = west, font=\scriptsize] { 1234\phantom{5}6\phantom{7} };
+        \node <3> [below = 0 of Nc, anchor = north, font=\scriptsize] { 123456\phantom{7} };
+        \node <3> [below = 0 of Nd, anchor = north, font=\scriptsize] { 123456\phantom{7} };
+
+        \tikzstyle{edge} = [ultra thick];
+        \tikzstyle{ledge} = [color = black!50!white];
+
+        \draw [ledge] (Na) -- (Nb);
+        \draw [ledge] (Nb) -- (Nc);
+        \draw [ledge] (Nc) -- (Nd);
+        \draw [ledge] (Nb) -- (Nd);
+
+        \node [draw, circle, fill=white, inner sep=2pt, font=\bfseries] (N1) at (5.5,  0) {1};
+        \node [draw, circle, fill=white, inner sep=2pt, font=\bfseries] (N2) at (7.5,  0) {2};
+        \node [draw, circle, fill=white, inner sep=2pt, font=\bfseries] (N3) at (5.5, -1) {3};
+        \node [draw, circle, fill=white, inner sep=2pt, font=\bfseries] (N4) at (7.5, -1) {4};
+        \node [draw, circle, fill=white, inner sep=2pt, font=\bfseries] (N5) at (5.5, -2) {5};
+        \node [draw, circle, fill=white, inner sep=2pt, font=\bfseries] (N6) at (7.5, -2) {6};
+        \node [draw, circle, fill=white, inner sep=2pt, font=\bfseries] (N7) at (7.5, -3) {7};
+
+        \draw [ledge] (N1) -- (N2);
+        \draw [ledge] (N1) -- (N4);
+        \draw [ledge] (N2) -- (N4);
+        \draw [ledge] (N4) -- (N6);
+        \draw [ledge] (N2) to [in=45, out=315] (N6);
+        \draw [ledge] (N6) -- (N7);
+
+        \draw [ledge] (N1) -- (N3);
+        \draw [ledge] (N3) -- (N5);
+        \draw [ledge] (N3) -- (N6);
+        \draw [ledge] (N5) -- (N6);
+
+    \end{tikzpicture}%}}}
+    \\~
 
 \end{frame}
 
