@@ -17,6 +17,9 @@
 \usetikzlibrary{decorations.pathreplacing, decorations.pathmorphing, shapes.misc}
 \usetikzlibrary{tikzmark}
 
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=0pt] (char) {#1};}}
+
 \definecolor{uofguniversityblue}{rgb}{0, 0.219608, 0.396078}
 
 \definecolor{uofgheather}{rgb}{0.356863, 0.32549, 0.490196}
@@ -499,12 +502,6 @@
             }
         }
 
-        \tikzstyle{p} = [draw, rounded corners, dashed, color=uofgpumpkin, ultra thick];
-        \draw <2-3> [p] ($(N11) + (-0.55, 0.51)$) -- ($(N12) + (0.55, 0.51)$) -- ($(N12) + (0.55, -1.5)$) -- ($(N11) + (-0.55, -1.5)$) -- cycle;
-        \draw <2-3> [p] ($(N13) + (-0.55, 0.51)$) -- ($(N21) + (0.55, 0.51)$) -- ($(N21) + (0.55, -1.5)$) -- ($(N13) + (-0.55, -1.5)$) -- cycle;
-        \draw <2-3> [p] ($(N22) + (-0.55, 0.51)$) -- ($(N23) + (0.55, 0.51)$) -- ($(N23) + (0.55, -1.5)$) -- ($(N22) + (-0.55, -1.5)$) -- cycle;
-        \draw <2-3> [p] ($(N31) + (-0.55, 0.51)$) -- ($(N33) + (0.55, 0.51)$) -- ($(N33) + (0.55, -1.5)$) -- ($(N31) + (-0.55, -1.5)$) -- cycle;
-
         \foreach \na in {1, ..., 3}{
             \draw (N) -- (N\na);
             \foreach \nb in {1, ..., 3}{
@@ -515,32 +512,9 @@
         \tikzstyle{t} = [draw, fill, fill=uofgcobalt, rounded corners];
         \foreach \na in {1, ..., 3}{
             \foreach \nb in {1, ..., 3}{
-                \draw <1-2> [t] (N\na\nb) -- (N\na\nb t1) -- (N\na\nb t2) -- cycle;
-                \draw <4-> [t] (N\na\nb) -- (N\na\nb t1) -- (N\na\nb t2) -- cycle;
+                \draw [t] (N\na\nb) -- (N\na\nb t1) -- (N\na\nb t2) -- cycle;
             }
         }
-
-        \foreach \na in {1, ..., 3}{
-            \foreach \nb in {1, ..., 3}{
-                \draw <4-5> [p] ($(N\na\nb) + (-0.55, 0.51)$) -- ($(N\na\nb) + (0.55, 0.51)$) --
-                ($(N\na\nb) + (0.55, -1.5)$) -- ($(N\na\nb) + (-0.55, -1.5)$) -- cycle;
-            }
-
-            \draw <6> [p] ($(N\na 1) + (-0.55, 1.51)$) -- ($(N\na 3) + (0.55, 1.51)$) --
-            ($(N\na 3) + (0.55, -1.5)$) -- ($(N\na 1) + (-0.55, -1.5)$) -- cycle;
-        }
-
-        \draw <3> [t] (N11) -- (N11s1) -- (N11s2) -- cycle;
-        \draw <3> [t] (N12) -- (N12s1) -- (N12s2) -- cycle;
-        \draw <3> [t] (N13) -- (N13s1) -- (N13s2) -- cycle;
-
-        \draw <3> [t] (N21) -- (N21t1) -- (N21t2) -- cycle;
-        \draw <3> [t] (N22) -- (N22h1) -- (N22h2) -- cycle;
-        \draw <3> [t] (N23) -- (N23s1) -- (N23s2) -- cycle;
-
-        \draw <3> [t] (N31) -- (N31s1) -- (N31s2) -- cycle;
-        \draw <3> [t] (N32) -- (N32t1) -- (N32t2) -- cycle;
-        \draw <3> [t] (N33) -- (N33s1) -- (N33s2) -- cycle;
 
         \tikzstyle{c} = [draw, circle, fill, fill=uofgcobalt];
         \node [c] at (N) { };
@@ -553,8 +527,161 @@
             }
         }
 
-        \node <5-6> [c] at (N21t1) { };
-        \node <5-6> at (N21t1) { $\star$ };
+        \node at (-7, -5.5) { }; \node at (7, -5.5) { };
+    \end{tikzpicture}%}}}
+    \\~
+\end{frame}
+
+\begin{frame}{Parallel Search}
+    \centering
+    \begin{tikzpicture}[scale=0.75]%{{{
+        \coordinate (R);
+
+        \coordinate (N) at (R);
+
+        \coordinate (N1) at ($(N) + (-4, -1.25)$);
+        \coordinate (N2) at ($(N) + ( 0, -1.25)$);
+        \coordinate (N3) at ($(N) + ( 4, -1.25)$);
+
+        \foreach \na in {1, ..., 3}{
+            \coordinate (N\na 1) at ($(N\na) + (-1.25, -1)$);
+            \coordinate (N\na 2) at ($(N\na) + ( 0,    -1)$);
+            \coordinate (N\na 3) at ($(N\na) + ( 1.25, -1)$);
+
+            \foreach \nb in {1, ..., 3}{
+                \coordinate (N\na\nb t1) at ($(N\na\nb) + (-0.5, -1)$);
+                \coordinate (N\na\nb t2) at ($(N\na\nb) + ( 0.5, -1)$);
+
+                \coordinate (N\na\nb s1) at ($(N\na\nb) + (-0.3, -0.6)$);
+                \coordinate (N\na\nb s2) at ($(N\na\nb) + ( 0.3, -0.6)$);
+
+                \coordinate (N\na\nb h1) at ($(N\na\nb) + (-1.5, -3)$);
+                \coordinate (N\na\nb h2) at ($(N\na\nb) + ( 1.5, -3)$);
+            }
+        }
+
+        \tikzstyle{p} = [draw, rounded corners, dashed, color=uofgpumpkin, ultra thick];
+        \draw <1-2> [p] ($(N11) + (-0.55, 0.51)$) -- ($(N12) + (0.55, 0.51)$) -- ($(N12) + (0.55, -1.5)$) -- ($(N11) + (-0.55, -1.5)$) -- cycle;
+        \draw <1-2> [p] ($(N13) + (-0.55, 0.51)$) -- ($(N21) + (0.55, 0.51)$) -- ($(N21) + (0.55, -1.5)$) -- ($(N13) + (-0.55, -1.5)$) -- cycle;
+        \draw <1-2> [p] ($(N22) + (-0.55, 0.51)$) -- ($(N23) + (0.55, 0.51)$) -- ($(N23) + (0.55, -1.5)$) -- ($(N22) + (-0.55, -1.5)$) -- cycle;
+        \draw <1-2> [p] ($(N31) + (-0.55, 0.51)$) -- ($(N33) + (0.55, 0.51)$) -- ($(N33) + (0.55, -1.5)$) -- ($(N31) + (-0.55, -1.5)$) -- cycle;
+
+        \foreach \na in {1, ..., 3}{
+            \draw (N) -- (N\na);
+            \foreach \nb in {1, ..., 3}{
+                \draw (N\na) -- (N\na\nb);
+            }
+        }
+
+        \tikzstyle{t} = [draw, fill, fill=uofgcobalt, rounded corners];
+        \foreach \na in {1, ..., 3}{
+            \foreach \nb in {1, ..., 3}{
+                \draw <1> [t] (N\na\nb) -- (N\na\nb t1) -- (N\na\nb t2) -- cycle;
+                \draw <3> [t] (N\na\nb) -- (N\na\nb t1) -- (N\na\nb t2) -- cycle;
+            }
+        }
+
+        \foreach \na in {1, ..., 3}{
+            \foreach \nb in {1, ..., 3}{
+                \draw <3> [p] ($(N\na\nb) + (-0.55, 0.51)$) -- ($(N\na\nb) + (0.55, 0.51)$) --
+                ($(N\na\nb) + (0.55, -1.5)$) -- ($(N\na\nb) + (-0.55, -1.5)$) -- cycle;
+            }
+        }
+
+        \draw <2> [t] (N11) -- (N11s1) -- (N11s2) -- cycle;
+        \draw <2> [t] (N12) -- (N12s1) -- (N12s2) -- cycle;
+        \draw <2> [t] (N13) -- (N13s1) -- (N13s2) -- cycle;
+
+        \draw <2> [t] (N21) -- (N21t1) -- (N21t2) -- cycle;
+        \draw <2> [t] (N22) -- (N22h1) -- (N22h2) -- cycle;
+        \draw <2> [t] (N23) -- (N23s1) -- (N23s2) -- cycle;
+
+        \draw <2> [t] (N31) -- (N31s1) -- (N31s2) -- cycle;
+        \draw <2> [t] (N32) -- (N32t1) -- (N32t2) -- cycle;
+        \draw <2> [t] (N33) -- (N33s1) -- (N33s2) -- cycle;
+
+        \tikzstyle{c} = [draw, circle, fill, fill=uofgcobalt];
+        \node [c] at (N) { };
+
+        \foreach \na in {1, ..., 3}{
+            \node [c] at (N\na) { };
+
+            \foreach \nb in {1, ..., 3}{
+                \node [c] at (N\na\nb) { };
+            }
+        }
+
+        \node at (-7, -5.5) { }; \node at (7, -5.5) { };
+    \end{tikzpicture}%}}}
+    \\~
+\end{frame}
+
+\begin{frame}{Work-Stealing is Not Just About Balance}
+    \centering
+    \begin{tikzpicture}[scale=0.75]%{{{
+        \coordinate (R);
+
+        \coordinate (N) at (R);
+
+        \coordinate (N1) at ($(N) + (-4, -1.25)$);
+        \coordinate (N2) at ($(N) + ( 0, -1.25)$);
+        \coordinate (N3) at ($(N) + ( 4, -1.25)$);
+
+        \foreach \na in {1, ..., 3}{
+            \coordinate (N\na 1) at ($(N\na) + (-1.25, -1)$);
+            \coordinate (N\na 2) at ($(N\na) + ( 0,    -1)$);
+            \coordinate (N\na 3) at ($(N\na) + ( 1.25, -1)$);
+
+            \foreach \nb in {1, ..., 3}{
+                \coordinate (N\na\nb t1) at ($(N\na\nb) + (-0.5, -1)$);
+                \coordinate (N\na\nb t2) at ($(N\na\nb) + ( 0.5, -1)$);
+
+                \coordinate (N\na\nb s1) at ($(N\na\nb) + (-0.3, -0.6)$);
+                \coordinate (N\na\nb s2) at ($(N\na\nb) + ( 0.3, -0.6)$);
+
+                \coordinate (N\na\nb h1) at ($(N\na\nb) + (-1.5, -3)$);
+                \coordinate (N\na\nb h2) at ($(N\na\nb) + ( 1.5, -3)$);
+            }
+        }
+
+        \tikzstyle{p} = [draw, rounded corners, dashed, color=uofgpumpkin, ultra thick];
+
+        \foreach \na in {1, ..., 3}{
+            \draw (N) -- (N\na);
+            \foreach \nb in {1, ..., 3}{
+                \draw (N\na) -- (N\na\nb);
+            }
+        }
+
+        \tikzstyle{t} = [draw, fill, fill=uofgcobalt, rounded corners];
+        \foreach \na in {1, ..., 3}{
+            \foreach \nb in {1, ..., 3}{
+                \draw [t] (N\na\nb) -- (N\na\nb t1) -- (N\na\nb t2) -- cycle;
+            }
+        }
+
+        \foreach \na in {1, ..., 3}{
+            \foreach \nb in {1, ..., 3}{
+                \draw <1> [p] ($(N\na\nb) + (-0.55, 0.51)$) -- ($(N\na\nb) + (0.55, 0.51)$) --
+                ($(N\na\nb) + (0.55, -1.5)$) -- ($(N\na\nb) + (-0.55, -1.5)$) -- cycle;
+            }
+
+            \draw <2> [p] ($(N\na 1) + (-0.55, 1.51)$) -- ($(N\na 3) + (0.55, 1.51)$) --
+            ($(N\na 3) + (0.55, -1.5)$) -- ($(N\na 1) + (-0.55, -1.5)$) -- cycle;
+        }
+        \tikzstyle{c} = [draw, circle, fill, fill=uofgcobalt];
+        \node [c] at (N) { };
+
+        \foreach \na in {1, ..., 3}{
+            \node [c] at (N\na) { };
+
+            \foreach \nb in {1, ..., 3}{
+                \node [c] at (N\na\nb) { };
+            }
+        }
+
+        \node [c] at (N21t1) { };
+        \node at (N21t1) { $\star$ };
 
         \node at (-7, -5.5) { }; \node at (7, -5.5) { };
     \end{tikzpicture}%}}}
@@ -562,6 +689,10 @@
 \end{frame}
 
 \begin{frame}{Preventing a Slowdown, Part 1}
+    \begin{itemize}
+        \item At least one thread must preserve the ``sequential'' search order.
+        \item If a solution is found, we must cancel all other workers immediately.
+    \end{itemize}
 \end{frame}
 
 \begin{frame}{Backjumping}
@@ -757,51 +888,146 @@
     \begin{tikzpicture}[remember picture, overlay]
         \coordinate (fail1lc) at ($(pic cs:fail1l) + (0, 0.13)$);
         \coordinate (fail1rc) at ($(pic cs:fail1r) + (0, 0.03)$);
-        \node <2> [fill=uofgpumpkin, rounded corners, fit=(fail1lc) (fail1rc)] { \phantom{X} };
+        \node <3-> (fail1box) [fill=uofgpumpkin, rounded corners, fit=(fail1lc) (fail1rc)] { \phantom{X} };
+        \coordinate (fail2lc) at ($(pic cs:fail2l) + (0, 0.13)$);
+        \coordinate (fail2rc) at ($(pic cs:fail2r) + (0, 0.03)$);
+        \node <3-> (fail2box) [fill=uofgpumpkin, rounded corners, fit=(fail2lc) (fail2rc)] { \phantom{X} };
+        \coordinate (fail3lc) at ($(pic cs:fail3l) + (0, 0.13)$);
+        \coordinate (fail3rc) at ($(pic cs:fail3r) + (0, 0.03)$);
+        \node <3-4> (fail3box) [fill=uofgpumpkin, rounded corners, fit=(fail3lc) (fail3rc)] { \phantom{X} };
+        \node <4-> (fail3box) [fill=uofgcobalt, rounded corners, fit=(fail3lc) (fail3rc)] { \phantom{X} };
+        \coordinate (fail4lc) at ($(pic cs:fail4l) + (0, 0.13)$);
+        \coordinate (fail4rc) at ($(pic cs:fail4r) + (0, 0.03)$);
+        \node <3-> (fail4box) [fill=uofgpumpkin, rounded corners, fit=(fail4lc) (fail4rc)] { \phantom{X} };
+        \coordinate (fail5lc) at ($(pic cs:fail5l) + (0, 0.13)$);
+        \coordinate (fail5rc) at ($(pic cs:fail5r) + (0, 0.03)$);
+        \node <3> (fail5box) [fill=uofgpumpkin, rounded corners, fit=(fail5lc) (fail5rc)] { \phantom{X} };
+        \node <4-> (fail5box) [fill=uofgcobalt, rounded corners, fit=(fail5lc) (fail5rc)] { \phantom{X} };
+
+        \coordinate (success1lc) at ($(pic cs:success1l) + (0, 0.13)$);
+        \coordinate (success1rc) at ($(pic cs:success1r) + (0, 0.03)$);
+        \node <2-> [fill=uofglawn, rounded corners, fit=(success1lc) (success1rc)] { \phantom{X} };
+        \coordinate (success2lc) at ($(pic cs:success2l) + (0, 0.13)$);
+        \coordinate (success2rc) at ($(pic cs:success2r) + (0, 0.03)$);
+        \node <2-> [fill=uofglawn, rounded corners, fit=(success2lc) (success2rc)] { \phantom{X} };
+        \coordinate (success3lc) at ($(pic cs:success3l) + (0, 0.13)$);
+        \coordinate (success3rc) at ($(pic cs:success3r) + (0, 0.03)$);
+        \node <2-> [fill=uofglawn, rounded corners, fit=(success3lc) (success3rc)] { \phantom{X} };
+
+        \draw <4-> [->, thick, color=uofgcobalt] (fail3box) -| (fail5box);
+
+        \coordinate (fgets1lc) at ($(pic cs:fgets1l) + (0, 0.13)$);
+        \coordinate (fgets1rc) at ($(pic cs:fgets1r) + (0, 0.03)$);
+        \node <6-> (fgets1box) [fill=uofgthistle, rounded corners, fit=(fgets1lc) (fgets1rc)] { \phantom{X} };
+        \coordinate (fgets2lc) at ($(pic cs:fgets2l) + (0, 0.13)$);
+        \coordinate (fgets2rc) at ($(pic cs:fgets2r) + (0, 0.03)$);
+        \node <6-> (fgets2box) [fill=uofgthistle, rounded corners, fit=(fgets2lc) (fgets2rc)] { \phantom{X} };
+        \coordinate (fgets3lc) at ($(pic cs:fgets3l) + (0, 0.13)$);
+        \coordinate (fgets3rc) at ($(pic cs:fgets3r) + (0, 0.03)$);
+        \node <6-> (fgets3box) [fill=uofgthistle, rounded corners, fit=(fgets3lc) (fgets3rc)] { \phantom{X} };
+        \coordinate (fgets4lc) at ($(pic cs:fgets4l) + (0, 0.13)$);
+        \coordinate (fgets4rc) at ($(pic cs:fgets4r) + (0, 0.03)$);
+        \node <6-> (fgets4box) [fill=uofgthistle, rounded corners, fit=(fgets4lc) (fgets4rc)] { \phantom{X} };
+        \coordinate (fgets5lc) at ($(pic cs:fgets5l) + (0, 0.13)$);
+        \coordinate (fgets5rc) at ($(pic cs:fgets5r) + (0, 0.03)$);
+        \node <6-> (fgets5box) [fill=uofgthistle, rounded corners, fit=(fgets5lc) (fgets5rc)] { \phantom{X} };
+        \coordinate (fgets6lc) at ($(pic cs:fgets6l) + (0, 0.13)$);
+        \coordinate (fgets6rc) at ($(pic cs:fgets6r) + (0, 0.03)$);
+        \node <6-> (fgets6box) [fill=uofgthistle, rounded corners, fit=(fgets6lc) (fgets6rc)] { \phantom{X} };
     \end{tikzpicture}
     \scriptsize
     \begin{algorithm}[H]
     \DontPrintSemicolon
     \SetKwSwitch{Switch}{Case}{Other}{case}{of}{}{otherwise}{endcase}{endsw}
-    \nl $\FuncSty{search}$ (Domains $D$) $\rightarrow$ \tikzmark{fail1l}Fail $F$\tikzmark{fail1r} \KwSty{or} Success \;
+    \nl $\FuncSty{search}$ (Domains $D$) $\rightarrow$ \tikzmark{fail1l}Fail $F$\tikzmark{fail1r} \KwSty{or} \tikzmark{success3l}Success\tikzmark{success3r} \;
     \nl \Begin{
-        \nl \lIf {$D = \emptyset$}{$\KwSty{return}~\textnormal{Success}$}
+        \nl \tikzmark{success1l}\lIf {$D = \emptyset$}{$\KwSty{return}~\textnormal{Success}$\tikzmark{success1r}}
         \nl $D_v \gets \textnormal{a domain in $D$ with minimum size}$ \;
-        \nl $F \gets \{ v \}$  \;
+        \nl \tikzmark{fgets1l}$F \gets \{ v \}$\tikzmark{fgets1r} \;
         \nl \ForEach {$v' \in D_v~\textnormal{ordered by a heuristic}$}{
             \nl $D' \gets \FuncSty{clone}(D)$ \;
             \nl \Switch{$\FuncSty{assign}(D', v, v')$}{
-                \nl \lCase{\textnormal{Fail $F'$~\KwSty{then}}}{$F \gets F \cup F'$}
+                \nl \lCase{\textnormal{\tikzmark{fail2l}Fail
+                $\tikzmark{fgets5l}F'\tikzmark{fgets5r}$\tikzmark{fail2r}~\KwSty{then}}}{\tikzmark{fgets2l}$F \gets F \cup F'\tikzmark{fgets2r}$}
                 \nl \Case{\textnormal{Success~\KwSty{then}}}{
                     \nl \Switch{$\FuncSty{search}(D' - D_v)$}{
-                        \nl \Case{\textnormal{Fail $F'$~\KwSty{then}}}{
-                            \nl \lIf{$\nexists\,w \in F'~\KwSty{such that}~D_w \ne D'_w$}{$\KwSty{return}~\textnormal{Fail}~F'$}
-                            \nl $F \gets F \cup F'$  \;
+                        \nl \Case{\textnormal{\tikzmark{fail3l}Fail $\tikzmark{fgets6l}F'\tikzmark{fgets6r}$\tikzmark{fail3r}~\KwSty{then}}}{
+                            \nl \lIf{\only<1-4>{$\nexists\,w \in F'~\KwSty{such that}~D_w \ne
+                                D'_w$}\only<5->{\color{black!20!white}$\nexists\,w \in F'~\KwSty{such that}~D_w \ne
+                            D'_w$}}{$\KwSty{return}~\tikzmark{fail5l}\textnormal{Fail}~F'\tikzmark{fail5r}$}
+                            \nl \tikzmark{fgets3l}$F \gets F \cup F'$\tikzmark{fgets3r} \;
                         }
-                        \nl \lCase{\textnormal{Success~\KwSty{then}}}{$\KwSty{return}~\textnormal{Success}$}
+                        \nl \tikzmark{success2l}\lCase{\textnormal{Success~\KwSty{then}}}{$\KwSty{return}~\textnormal{Success}$\tikzmark{success2r}}
                     }
                 }
             }
         }
-        \nl $\KwSty{return}~\textnormal{Fail}~F$ \;
+        \nl $\KwSty{return}~\tikzmark{fail4l}\textnormal{Fail}~\tikzmark{fgets4l}F\tikzmark{fgets4r}\tikzmark{fail4r}$ \;
     }
     \end{algorithm}
 \end{frame}
 
 \begin{frame}{Backjumping as a Lazy Fold}
-
-\end{frame}
-
-\begin{frame}{Preventing a Slowdown, Part 2}
+    \begin{itemize}
+        \item Lazily map each subproblem to Jump $F$ $\KwSty{or}$ Fail $F$ $\KwSty{or}$ Success.
+        \item Lazily fold, starting with Fail $\{ v \}$, as follows:
+            \begin{alignat*}{2}
+                \underline{\hspace{1em}} &~\circled{$>$}~ \textnormal{Success} \hspace{1em} &&= \textnormal{Success} \\
+                \underline{\hspace{1em}} &~\circled{$>$}~ \textnormal{Jump}~F \hspace{1em} &&= \textnormal{Jump}~F \\
+                \textnormal{Fail}~F &~\circled{$>$}~ \textnormal{Fail}~G \hspace{1em} &&= \textnormal{Fail}~(F \cup G)
+            \end{alignat*}
+        \item If a Jump $F$ occurs to the left of a Success, we have a bug.
+    \end{itemize}
 \end{frame}
 
 \begin{frame}{Folding Zero}
+    \begin{itemize}
+        \item When multiplying, if any item is 0, the result is 0.
+            \begin{alignat*}{2}
+                \underline{\hspace{1em}} &~\times~ 0 \hspace{1em} &&= 0 \\
+                0 &~\times~ \underline{\hspace{1em}} \hspace{1em} &&= 0
+            \end{alignat*}
+        \item Here, if any item is Success, the result is Success, and we do not need to evaluate
+            the rest of the map.
+            \begin{alignat*}{2}
+                \underline{\hspace{1em}} &~\circled{$>$}~ \textnormal{Success} \hspace{1em} &&= \textnormal{Success}
+            \end{alignat*}
+        \item If any item is Jump $F$, the result is either Jump $F$, or some Jump $G$ or Success
+            that is further to the left. We do not need to evaluate any item to the right.
+            \begin{alignat*}{2}
+                \underline{\hspace{1em}} &~\circled{$>$}~ \textnormal{Jump}~F \hspace{1em} &&= \textnormal{Jump}~F
+            \end{alignat*}
+    \end{itemize}
 \end{frame}
 
-\begin{frame}{Preventing a Slowdown, Part 3}
+\begin{frame}{Preventing a Slowdown, Part 2}
+    \begin{itemize}
+        \item Any subproblem which we have shown will not be used, must be cancelled (recursively)
+            immediately.
+        \item When the result of a fold is known, the continuation must be executed immediately.
+    \end{itemize}
 \end{frame}
 
 \begin{frame}{Some Grumpy Remarks about Brittle Skeletons}
+    \only<2>{
+        \centering
+        \includegraphics*[keepaspectratio=true,scale=0.4]{skeletons1.png}
+    }
+    \only<3>{
+        \centering
+        \includegraphics*[keepaspectratio=true,scale=0.4]{skeletons3.png}
+    }
+    \only<4-5>{
+        \centering
+        \includegraphics*[keepaspectratio=true,scale=0.4]{skeletons4.png}
+
+        \vspace*{1em}
+
+        \uncover<5>{
+            \centering
+            \includegraphics* [keepaspectratio=true,scale=0.4]{skeletons5.png}
+        }
+    }
 \end{frame}
 
 \begin{frame}{What's the Alternative?}
@@ -810,6 +1036,11 @@
         \item <2-> Doing it by hand?
             \begin{itemize}
                 \item This works, but is painful and error-prone\ldots
+                \item My current implementation works by keeping a ``sequential'' thread and
+                    ``precomputing'' using extra threads. This often leads to the sequential thread
+                    being idle and blocking.
+                \item Allowing the blocking thread to suspend and steal elsewhere could give an
+                    absolute slowdown.
             \end{itemize}
 
         \item <3-> Better skeletons?
