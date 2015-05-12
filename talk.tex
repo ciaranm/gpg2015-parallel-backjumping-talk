@@ -754,10 +754,16 @@
 
 \begin{frame}{A Backjumping Algorithm}
     \scriptsize
+    \begin{tikzpicture}[remember picture, overlay]
+        \coordinate (fail1lc) at ($(pic cs:fail1l) + (0, 0.13)$);
+        \coordinate (fail1rc) at ($(pic cs:fail1r) + (0, 0.03)$);
+        \node <2> [fill=uofgpumpkin, rounded corners, fit=(fail1lc) (fail1rc)] { \phantom{X} };
+    \end{tikzpicture}
+    \scriptsize
     \begin{algorithm}[H]
     \DontPrintSemicolon
     \SetKwSwitch{Switch}{Case}{Other}{case}{of}{}{otherwise}{endcase}{endsw}
-    \nl $\FuncSty{search}$ (Domains $D$) $\rightarrow$ Fail $F$ \KwSty{or} Success \;
+    \nl $\FuncSty{search}$ (Domains $D$) $\rightarrow$ \tikzmark{fail1l}Fail $F$\tikzmark{fail1r} \KwSty{or} Success \;
     \nl \Begin{
         \nl \lIf {$D = \emptyset$}{$\KwSty{return}~\textnormal{Success}$}
         \nl $D_v \gets \textnormal{a domain in $D$ with minimum size}$ \;
