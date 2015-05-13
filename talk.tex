@@ -1057,6 +1057,49 @@
 
 \end{frame}
 
+\begin{frame}{A Quick Look at Some Results}
+
+    \only<1> {
+        \begin{itemize}
+            \item 2,487 pattern / target pairs from 11 families of benchmark problems.
+            \item 32 threads, 16 core HT system.
+            \item A more complicated algorithm than the one I've described (all-different filtering,
+                supplemental graphs, \ldots).
+            \item Some boring parallel preprocessing too.
+            \item C++11 native threads.
+        \end{itemize}
+    }
+
+    \only<2> {
+        \input{gen-graph-parallel-1}
+    }
+
+    \only<3> {
+        \input{gen-graph-parallel-2}
+    }
+
+    \only<4> {
+        \input{gen-graph-parallel-3}
+    }
+
+    \only<5> {
+        \input{gen-graph-parallel-4}
+    }
+
+    \only<6> {
+        \input{gen-graph-speedup}
+    }
+
+    \only<7> {
+        \begin{itemize}
+            \item 150 LOC for a suitable priority queue.
+            \item Search function goes from 40 LOC to 120 LOC.
+            \item Horribly intrusive, and making it distributed would be seriously painful.
+            \item 7\% slower when run with one thread, even when the queue for stealing is removed.
+        \end{itemize}
+    }
+\end{frame}
+
 \begin{frame}[b]
     \begin{center}
     \url{http://dcs.gla.ac.uk/~ciaran} \\
